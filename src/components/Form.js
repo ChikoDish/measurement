@@ -1,14 +1,20 @@
 import {
   Button,
   FormControl,
+  IconButton,
   InputLabel,
   makeStyles,
   MenuItem,
   Select,
   TextField,
 } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
 import React, { useState } from "react";
 import converter from "../utils/converter";
+
+// function Alert(props) {
+//   return <MuiAlert elevation={6} variant="filled" {...props} />;
+// }
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -26,26 +32,44 @@ const Form = (props) => {
   const [to, setTo] = useState("");
   const [fromUnit, setFromUnit] = useState("");
   const [toUnit, setToUnit] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   const handleChange = (event) => {
     setFromUnit(event.target.value);
+  };
+
+  const addFrom = (e) => {
+    if (isNaN(e.target.value)) {
+      setIsValid(false);
+      setOpen(true);
+    } else {
+      setIsValid(true);
+      setFrom(e.target.value);
+    }
   };
 
   const handleChange1 = (event) => {
     setToUnit(event.target.value);
   };
+
   const submitForm = (e) => {
     e.preventDefault();
-    setTo(converter(from, fromUnit, toUnit));
+    if (!isValid) {
+      setOpen(true);
+    } else setTo(converter(from, fromUnit, toUnit));
   };
   return (
     <form onSubmit={submitForm}>
-      <TextField
-        label="from"
-        type="number"
-        step="any"
-        onChange={(e) => setFrom(e.target.value)}
-      ></TextField>
+      <TextField label="from" type="text" onChange={addFrom}></TextField>
       <TextField label="to" value={to} disabled></TextField>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Select</InputLabel>
@@ -56,7 +80,9 @@ const Form = (props) => {
           onChange={handleChange}
         >
           {props.unitData.map(({ value, name }, index) => (
-            <MenuItem value={value}>{name}</MenuItem>
+            <MenuItem key={index} value={value}>
+              {name}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -69,13 +95,27 @@ const Form = (props) => {
           onChange={handleChange1}
         >
           {props.unitData.map(({ value, name }, index) => (
-            <MenuItem value={value}>{name}</MenuItem>
+            <MenuItem key={index} value={value}>
+              {name}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
       <Button type="submit" variant="contained" color="primary">
         Calculate
       </Button>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        severity="success"
+        message="Please Enter valid details!"
+      />
+      ;
     </form>
   );
 };
