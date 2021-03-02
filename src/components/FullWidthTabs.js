@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Length from "./Length";
+import Area from "./Area";
+import Temperature from "./Temperature";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,15 +44,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FullWidthTabs() {
   const classes = useStyles();
-  const theme = useTheme();
   const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setSelectedTab(index);
   };
 
   return (
@@ -59,11 +55,13 @@ export default function FullWidthTabs() {
       <AppBar position="static">
         <Tabs value={selectedTab} onChange={handleChange}>
           <Tab label="Length" />
-          <Tab label="Item Two" />
-          <Tab label="Item Three" />
+          <Tab label="Area" />
+          <Tab label="Temperature" />
         </Tabs>
       </AppBar>
       {selectedTab === 0 && <Length />}
+      {selectedTab === 1 && <Area />}
+      {selectedTab === 2 && <Temperature />}
     </div>
   );
 }
