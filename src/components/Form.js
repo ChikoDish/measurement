@@ -1,7 +1,10 @@
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
   FormControl,
-  IconButton,
+  Grid,
   InputLabel,
   makeStyles,
   MenuItem,
@@ -23,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  root: {
+    width: 500,
   },
 }));
 
@@ -68,55 +74,66 @@ const Form = (props) => {
     } else setTo(converter(from, fromUnit, toUnit));
   };
   return (
-    <form onSubmit={submitForm}>
-      <TextField label="from" type="text" onChange={addFrom}></TextField>
-      <TextField label="to" value={to} disabled></TextField>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Select</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={fromUnit}
-          onChange={handleChange}
-        >
-          {props.unitData.map(({ value, name }, index) => (
-            <MenuItem key={index} value={value}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label1">Select</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={toUnit}
-          onChange={handleChange1}
-        >
-          {props.unitData.map(({ value, name }, index) => (
-            <MenuItem key={index} value={value}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <Button type="submit" variant="contained" color="primary">
-        Calculate
-      </Button>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        severity="success"
-        message="Please Enter valid details!"
-      />
-      ;
-    </form>
+    <Grid
+      container
+      spacing={0}
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: "100px" }}
+    >
+      <Card className={classes.root}>
+        <CardContent>
+          <form onSubmit={submitForm}>
+            <TextField label="from" type="text" onChange={addFrom}></TextField>
+            <TextField label="to" value={to} disabled></TextField>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">Select</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={fromUnit}
+                onChange={handleChange}
+              >
+                {props.unitData.map(({ value, name }, index) => (
+                  <MenuItem key={index} value={value}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label1">Select</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={toUnit}
+                onChange={handleChange1}
+              >
+                {props.unitData.map(({ value, name }, index) => (
+                  <MenuItem key={index} value={value}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button type="submit" variant="contained" color="primary">
+              Calculate
+            </Button>
+            <Snackbar
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              open={open}
+              autoHideDuration={6000}
+              onClose={handleClose}
+              severity="success"
+              message="Please Enter valid details!"
+            />
+          </form>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };
 
