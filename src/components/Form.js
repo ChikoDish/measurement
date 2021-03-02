@@ -8,6 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import React, { useState } from "react";
+import converter from "../utils/converter";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -30,19 +31,22 @@ const Form = (props) => {
     setFromUnit(event.target.value);
   };
 
+  const handleChange1 = (event) => {
+    setToUnit(event.target.value);
+  };
   const submitForm = (e) => {
     e.preventDefault();
+    setTo(converter(from, fromUnit, toUnit));
   };
   return (
     <form onSubmit={submitForm}>
       <TextField
         label="from"
         type="number"
+        step="any"
         onChange={(e) => setFrom(e.target.value)}
       ></TextField>
-      <TextField label="to" disabled>
-        {to}
-      </TextField>
+      <TextField label="to" value={to} disabled></TextField>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Select</InputLabel>
         <Select
@@ -51,25 +55,25 @@ const Form = (props) => {
           value={fromUnit}
           onChange={handleChange}
         >
-          {/* {props.unitData.map((unit) => {
-            <MenuItem value={unit}>{unit}</MenuItem>;
-          })} */}
+          {props.unitData.map(({ value, name }, index) => (
+            <MenuItem value={value}>{name}</MenuItem>
+          ))}
         </Select>
       </FormControl>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Select</InputLabel>
+        <InputLabel id="demo-simple-select-label1">Select</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={toUnit}
-          onChange={handleChange}
+          onChange={handleChange1}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {props.unitData.map(({ value, name }, index) => (
+            <MenuItem value={value}>{name}</MenuItem>
+          ))}
         </Select>
       </FormControl>
-      <Button variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="primary">
         Calculate
       </Button>
     </form>

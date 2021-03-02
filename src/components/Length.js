@@ -24,12 +24,33 @@ const useStyles = makeStyles({
 
 export default function Length() {
   const classes = useStyles();
-  const unitData = [`mm`, `cm`, `inch`, `meter`];
+  const unitData = [
+    {
+      value: "mm",
+      name: "mm",
+    },
+    {
+      value: "cm",
+      name: "cm",
+    },
+    {
+      value: "m",
+      name: "m",
+    },
+    {
+      value: "in",
+      name: "in",
+    },
+    {
+      value: "ft",
+      name: "ft",
+    },
+  ];
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography>Length</Typography>
-        {/* <Form title="Length" unitData={unitData} /> */}
+        <Form title="Length" unitData={unitData} />
       </CardContent>
     </Card>
   );
