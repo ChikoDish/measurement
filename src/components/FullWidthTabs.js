@@ -9,6 +9,8 @@ import Box from "@material-ui/core/Box";
 import Length from "./Length";
 import Area from "./Area";
 import Temperature from "./Temperature";
+import Time from "./Time";
+import Volume from "./Volume";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,11 +59,15 @@ export default function FullWidthTabs() {
           <Tab label="Length" />
           <Tab label="Area" />
           <Tab label="Temperature" />
+          <Tab label="Time" />
+          <Tab label="Volume" />
         </Tabs>
       </AppBar>
       {selectedTab === 0 && <Length />}
       {selectedTab === 1 && <Area />}
       {selectedTab === 2 && <Temperature />}
+      {selectedTab === 3 && <Time />}
+      {selectedTab === 4 && <Volume />}
     </div>
   );
 }

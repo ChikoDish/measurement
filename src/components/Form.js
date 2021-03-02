@@ -79,7 +79,7 @@ const Form = (props) => {
       spacing={0}
       alignItems="center"
       justify="center"
-      style={{ minHeight: "100px" }}
+      style={{ minHeight: "3  00px" }}
     >
       <Card className={classes.root}>
         <CardContent>
